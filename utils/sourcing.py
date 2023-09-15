@@ -5,7 +5,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 
 def extract_plant_data(url, name):
-    """Initialises driver"""
+    """
+    -Initialises driver
+    -Navigate to url
+    -Save all img elements inside column to DF
+    """
     plant_info = []
 
     driver = webdriver.Chrome()
@@ -29,11 +33,3 @@ def extract_plant_data(url, name):
     df.to_csv(f'data/{name}.csv')
 
     print(f'You have collected {len(plant_info)} images of {name}')
-
-
-# plant_name = 'Daylilies'
-# save_to_csv(df=extract_plant_data(URL), name=plant_name)
-
-#response = requests.get(URL)
-#webpage = response.text
-#soup = BeautifulSoup(webpage, "html.parser")
