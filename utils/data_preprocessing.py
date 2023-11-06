@@ -101,3 +101,47 @@ def image_type_range(df):
                           }
     
     return count_dict
+
+def plants_over_x_images(df):
+    """
+    Returns a dictionary containing percentages of image types.
+    
+    Arguments:
+    
+    df: DataFrame
+        Must be the DF generated from plant_info_df()
+        
+    Returns:
+    
+    percent: float
+        The percentage of plant types that have images count within this band
+        
+    count: int
+        The number of plant types that have images count withing this band
+    """
+    band_dict = {}
+
+    plant_image_count = df.groupby('plant_name')['count'].sum().reset_index()
+    plant_image_count_sorted = plant_image_count.sort_values(by='count', ascending=False)
+
+    total_plants = plant_image_count.shape[0]
+
+    all_images_count = plant_image_count_sorted[plant_image_count_sorted['count'] == 400].shape[0]
+    over_300_count = plant_image_count_sorted[(plant_image_count_sorted['count'] >= 300) & (plant_image_count_sorted['count'] < 400)].shape[0]
+    over_200_count = plant_image_count_sorted[(plant_image_count_sorted['count'] >= 200) & (plant_image_count_sorted['count'] < 300)].shape[0]
+    over_100_count = plant_image_count_sorted[(plant_image_count_sorted['count'] >= 100) & (plant_image_count_sorted['count'] < 200)].shape[0]
+    under_100_count = plant_image_count_sorted[(plant_image_count_sorted['count'] >= 0) & (plant_image_count_sorted['count'] < 100)].shape[0]
+
+    all_images_percent = round((all_images_count / total_plants) * 100, 2)
+    over_300_percent = round((over_300_count / total_plants) * 100, 2)
+    over_200_percent = round((over_200_count / total_plants) * 100, 2)
+    over_100_percent = round((over_100_count / total_plants) * 100, 2)
+    under_100_percent = round((under_100_count / total_plants) * 100, 2)
+
+    band_dict['400'] = [all_images_percent, all_images_count]
+    band_dict['300-399'] = [over_300_percent, over_300_count]
+    band_dict['200-299'] = [over_200_percent, over_200_count]
+    band_dict['100-199'] = [over_100_percent, over_100_count]
+    band_dict['0-99'] = [under_100_percent, under_100_count]
+
+    return band_dict
