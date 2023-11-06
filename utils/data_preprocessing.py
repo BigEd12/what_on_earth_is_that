@@ -145,3 +145,32 @@ def plants_over_x_images(df):
     band_dict['0-99'] = [under_100_percent, under_100_count]
 
     return band_dict
+
+def basic_info(df):
+    """
+    Returns basic information about the DataFrame.
+    """
+    unique_plants = df['plant_name'].nunique()
+    
+    plant_info = plant_info_df(df)
+    image_ranges = image_type_range(plant_info)
+    percentage_info = plants_over_x_images(plant_info)
+    
+    print("*--- BASIC INFORMATION ---*")
+    print(f"Unique Plants: {unique_plants}")
+    print(f"----- RANGE IN IMAGES -----")
+    print(f"Bark:   Min num. of images: {image_ranges['bark']['min']} --- Max num. of images: {image_ranges['bark']['max']}")
+    print(f"Fruit:  Min num. of images: {image_ranges['fruit']['min']} --- Max num. of images: {image_ranges['fruit']['max']}")
+    print(f"Flower: Min num. of images: {image_ranges['flower']['min']} --- Max num. of images: {image_ranges['flower']['max']}")
+    print(f"Leaf:   Min num. of images: {image_ranges['leaf']['min']} --- Max num. of images: {image_ranges['leaf']['max']}")
+    print(f"----- MEAN IMAGES BY IMAGE TYPE -----")
+    print(f"Bark:   {int(image_ranges['bark']['mean'])}")
+    print(f"Fruit:  {int(image_ranges['fruit']['mean'])}")
+    print(f"Flower: {int(image_ranges['flower']['mean'])}")
+    print(f"Leaf:   {int(image_ranges['leaf']['mean'])}")
+    print(f"----- PLANTS WITH X IMAGES -----")
+    print(f"400 images:     Count - {percentage_info['400'][1]}    Percentage - {percentage_info['400'][0]}%")
+    print(f"300-399 images: Count - {percentage_info['300-399'][1]}    Percentage - {percentage_info['300-399'][0]}%")
+    print(f"200-299 images: Count - {percentage_info['200-299'][1]}   Percentage - {percentage_info['200-299'][0]}%")
+    print(f"100-199 images: Count - {percentage_info['100-199'][1]}    Percentage - {percentage_info['100-199'][0]}%")
+    print(f"0-99 images:    Count - {percentage_info['0-99'][1]}      Percentage - {percentage_info['0-99'][0]}%")
