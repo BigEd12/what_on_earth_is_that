@@ -158,6 +158,11 @@ def basic_info(df):
     
     print("*--- BASIC INFORMATION ---*")
     print(f"Unique Plants: {unique_plants}")
+    print(f"----- NUMBER OF IMAGES -----")
+    print(f'Bark: {df.image_type.value_counts()["bark"]}')
+    print(f'Fruit: {df.image_type.value_counts()["fruit"]}')
+    print(f'Flower: {df.image_type.value_counts()["flower"]}')
+    print(f'Leaf: {df.image_type.value_counts()["leaf"]}')
     print(f"----- RANGE IN IMAGES -----")
     print(f"Bark:   Min num. of images: {image_ranges['bark']['min']} --- Max num. of images: {image_ranges['bark']['max']}")
     print(f"Fruit:  Min num. of images: {image_ranges['fruit']['min']} --- Max num. of images: {image_ranges['fruit']['max']}")
